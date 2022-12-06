@@ -18,11 +18,13 @@ CFLAGS=-g -Werror-implicit-function-declaration
 CLIBS = -pthread
 
 #List all the .o files here that need to be linked 
-OBJS=CSftp.o usage.o dir.o 
+OBJS=CSftp.o usage.o dir.o commands.o
 
 usage.o: usage.c usage.h
 
 dir.o: dir.c dir.h
+
+commands.o: commands.c commands.h
 
 CSftp.o: CSftp.c dir.h usage.h
 
