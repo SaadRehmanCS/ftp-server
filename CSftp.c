@@ -116,9 +116,6 @@ int main(int argc, char **argv)
     
     create_socket(&sockfd, argv[1]);
 
-    char dirBuf[256];
-    rootDir = getcwd(dirBuf, 256);
-
     printf("server: waiting for connections...\r\n");
 
     while (1) {
@@ -128,6 +125,15 @@ int main(int argc, char **argv)
                   get_in_addr((struct sockaddr *)&their_addr),
                   s, sizeof s);
         printf("server: got connection from %s\r\n", s);
+
+        char dirBuf[256];
+
+        state = malloc(sizeof(struct State));
+        state->loggedIn = 0;
+        state->rootDir = getcwd(dirBuf, 256);
+        state->newPasvFD = -1;
+        state->currentPasvFD = -1;
+        state->pasvHasBeenCalled = 0;
 
         // create the child process here. AKA the client
         if (!fork()) {
@@ -176,7 +182,7 @@ int main(int argc, char **argv)
                         printf("STRU has been set\n");
                         break;
                     case CDUP:
-                        cdup(rootDir, cmd->args, server_message);
+                        cdup(state->rootDir, cmd->args, server_message);
                         printf("CDUP has been called\n");
                         break;
                     case RETR:
@@ -184,7 +190,7 @@ int main(int argc, char **argv)
                         printf("RETR has been called\n");
                         break;
                     case PASV:
-                        pasv(cmd->args, server_message, new_fd);
+                        pasv(server_message, new_fd);
                         printf("PASV has been set\n");
                         break;
                     case NLST:
@@ -192,7 +198,7 @@ int main(int argc, char **argv)
                         printf("NLST has been called\n");
                         break;
                     case CWD:
-                        cwd(cmd->args, server_message);
+                        cwd(state->rootDir, cmd->args, server_message);
                         printf("CWD has been set\n");
                         break;
                     case QUIT:
@@ -212,6 +218,7 @@ int main(int argc, char **argv)
 
         // parent doesn't need this
         close(new_fd);
+        free(state);
     }
 
     return 0;
