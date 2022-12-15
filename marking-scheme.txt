@@ -1,9 +1,9 @@
-Total before late penalty: [/42]
+Total before late penalty: [38/42]
 
 NOTE: in the marking report something left blank (e.g.  [ /6])
 typically means that you received full marks for that item.
 
-Functionality: [/35]
+Functionality: [31/35]
 
 [/1] Working makefile
 [/1] Accepts port to listen on
@@ -16,6 +16,7 @@ User
 Quit
 [/1] Closes connection
 
+-1 cwd .. escape root
 CWD
 [/1] simple directory change
 [/1] rejects changes with ./ or ../ in them
@@ -25,14 +26,17 @@ CDUP
 [/1] Changes to the next higher directory level
 [/1] Prevents CDUP above the root directory.
 
+-1 same as below
 TYPE
 [/2] Accepts Type Image and ASCII
 [/1] Rejects other types
 
+-1 did not reject ss nor as
 MODE
 [/1] Accepts stream mode
 [/1] Rejects anything that isn't a stream
 
+-1 same problem
 STRU
 [/1] Accepts file structure type
 [/1] Rejects non file structure types
@@ -56,6 +60,7 @@ Error checking
 [/1] Accept in RETR/NLST will time out
 [/1] Can handle client closing command connection without sending
 
+-1
 Quit
 [/1] Handles case when the amount of data to be written isn't actually written (short writes)
 [/1] Properly cleans things up so there are no memory leaks.
@@ -67,7 +72,7 @@ overall structure and programming involved in programming.  Please carefully
 review the documentation in your program.  Please pay careful attention to the
 readability criteria.
 
-Broad Marking Criteria :                     [/7]
+Broad Marking Criteria :                     [7/7]
 See below for a detailed description of this marking criteria
 Readability        [/3]
 Code Documentation [/2]
